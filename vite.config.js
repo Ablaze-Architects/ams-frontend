@@ -26,6 +26,7 @@ export default defineConfig({
 
     })
   ],
+  base: process.env.VITE_BASE_PATH || "/ams-frontend",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
