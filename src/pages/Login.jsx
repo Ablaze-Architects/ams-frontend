@@ -26,7 +26,6 @@ export default function Login() {
       if (res.ok) {
         setAuth(data.token, data.user.role)
 
-        // Redirect based on role
         if (data.user.role === "ALUMNI") {
           navigate("/community")
         } else if (data.user.role === "ADMIN") {
