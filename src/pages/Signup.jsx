@@ -139,7 +139,7 @@ export default function Signup() {
                   <option value="ALUMNI">ALUMNI</option>
                 </select>
               </div>
-              <Button type="submit">Next</Button>
+              <Button type="submit">{role === "ADMIN" ? "Sign In" : role === "ALUMNI" ? "Next" : "Submit"}</Button>
             </form>
           )}
           {step === 2 && (
@@ -170,16 +170,23 @@ export default function Signup() {
                       value={link.alumni_link}
                       onChange={(e) => handleSocialLinkChange(idx, "alumni_link", e.target.value)}
                     />
-                    <Input
-                      type="text"
-                      placeholder="Platform Name"
+                    <select
+                      className="w-full border rounded-md p-2"
                       value={link.alumni_link_name}
                       onChange={(e) => handleSocialLinkChange(idx, "alumni_link_name", e.target.value)}
-                    />
+                    >
+                      <option value="">Select Platform</option>
+                      <option value="LINKEDIN">LINKEDIN</option>
+                      <option value="GITHUB">GITHUB</option>
+                      <option value="FACEBOOK">FACEBOOK</option>
+                      <option value="INSTAGRAM">INSTAGRAM</option>
+                      <option value="REDDIT">REDDIT</option>
+                      <option value="OTHER">OTHER</option>
+                    </select>
                   </div>
                 ))}
               </div>
-              <Button type="submit">Complete Alumni Signup</Button>
+              <Button type="submit">Sign In</Button>
             </form>
           )}
         </CardContent>
