@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { Button } from "@/components/login/button"
-import { Input } from "@/components/login/input"
-import { Card, CardHeader, CardContent, CardTitle, CardFooter } from "@/components/login/card"
-import { Label } from "@/components/login/label"
+import { Button } from "@/components/login/Button"
+import { Input } from "@/components/login/Input"
+import { Card, CardHeader, CardContent, CardTitle, CardFooter } from "@/components/login/Card"
+import { Label } from "@/components/login/Label"
 import { setAuth } from "../utils/auth"
 
 export default function Login() {

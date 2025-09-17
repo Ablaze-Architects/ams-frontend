@@ -1,4 +1,6 @@
 "use client"
+import LogoutButton from "./login/Logout";
+import { getToken } from "../utils/auth";
 import * as React from "react"
 import { Link } from "react-router-dom"
 import {
@@ -77,6 +79,7 @@ const dashboardSections = [
 ]
 
 export default function AlumniNavbar() {
+  const isAuthenticated = !!getToken();
   return (
     <div className="w-full bg-primary shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -282,16 +285,23 @@ export default function AlumniNavbar() {
             </NavigationMenuList>
           </NavigationMenu>
           <div className="flex items-center ml-auto gap-2">
-            <Link to="/login">
-              <button className="px-3 mx-2 py-2 my-2 rounded-lg font-medium bg-primary-foreground text-primary hover:bg-primary-foreground/80 transition-all shadow-xs border border-primary-foreground">
-                Login
-              </button>
-            </Link>
-            <Link to="/signup">
-              <button className="px-3 mx-2 py-2 my-2 rounded-lg font-medium bg-primary-foreground text-primary hover:bg-primary-foreground/80 transition-all shadow-xs border border-primary-foreground">
-                Sign Up
-              </button>
-            </Link>
+            {!isAuthenticated && (
+              <>
+                <Link to="/login">
+                  <button className="px-3 mx-2 py-2 my-2 rounded-lg font-medium bg-primary-foreground text-primary hover:bg-primary-foreground/80 transition-all shadow-xs border border-primary-foreground">
+                    Login
+                  </button>
+                </Link>
+                <Link to="/signup">
+                  <button className="px-3 mx-2 py-2 my-2 rounded-lg font-medium bg-primary-foreground text-primary hover:bg-primary-foreground/80 transition-all shadow-xs border border-primary-foreground">
+                    Sign Up
+                  </button>
+                </Link>
+              </>
+            )}
+            {isAuthenticated && (
+              <LogoutButton />
+            )}
           </div>
         </div>
       </div>

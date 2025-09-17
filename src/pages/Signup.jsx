@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { Button } from "@/components/login/button"
-import { Input } from "@/components/login/input"
-import { Card, CardHeader, CardContent, CardTitle, CardFooter } from "@/components/login/card"
-import { Label } from "@/components/login/label"
+import { Button } from "@/components/login/Button"
+import { Input } from "@/components/login/Input"
+import { Card, CardHeader, CardContent, CardTitle, CardFooter } from "@/components/login/Card"
+import { Label } from "@/components/login/Label"
 
 
 
@@ -21,10 +21,8 @@ export default function Signup() {
   const [stream, setStream] = useState("");
   const [occupation, setOccupation] = useState("");
   const [yearOfGraduation, setYearOfGraduation] = useState("");
-  const [socialLinks, setSocialLinks] = useState([
-    { alumni_link: "", alumni_link_name: "" },
-    { alumni_link: "", alumni_link_name: "" },
-  ]);
+  const [socialLinks, setSocialLinks] = useState([]);
+  const [showSocialInputs, setShowSocialInputs] = useState(false);
   const navigate = useNavigate();
 
   const handleFirstStep = (e) => {
@@ -162,29 +160,63 @@ export default function Signup() {
               </div>
               <div>
                 <Label>Social Links</Label>
-                {socialLinks.map((link, idx) => (
-                  <div key={idx} className="flex gap-2 mb-2">
-                    <Input
-                      type="url"
-                      placeholder="Link URL"
-                      value={link.alumni_link}
-                      onChange={(e) => handleSocialLinkChange(idx, "alumni_link", e.target.value)}
-                    />
-                    <select
-                      className="w-full border rounded-md p-2"
-                      value={link.alumni_link_name}
-                      onChange={(e) => handleSocialLinkChange(idx, "alumni_link_name", e.target.value)}
-                    >
-                      <option value="">Select Platform</option>
-                      <option value="LINKEDIN">LINKEDIN</option>
-                      <option value="GITHUB">GITHUB</option>
-                      <option value="FACEBOOK">FACEBOOK</option>
-                      <option value="INSTAGRAM">INSTAGRAM</option>
-                      <option value="REDDIT">REDDIT</option>
-                      <option value="OTHER">OTHER</option>
-                    </select>
-                  </div>
-                ))}
+                {!showSocialInputs && (
+                  <button
+                    type="button"
+                    className="px-3 py-1 rounded bg-primary-foreground text-primary border border-primary-foreground font-bold"
+                    onClick={() => {
+                      setShowSocialInputs(true);
+                      setSocialLinks([{ alumni_link: "", alumni_link_name: "" }]);
+                    }}
+                  >
+                    +
+                  </button>
+                )}
+                {showSocialInputs && (
+                  <>
+                    {socialLinks.map((link, idx) => (
+                      <div key={idx} className="flex gap-2 mb-2 items-center">
+                        <Input
+                          type="url"
+                          placeholder="Link URL"
+                          value={link.alumni_link}
+                          onChange={(e) => handleSocialLinkChange(idx, "alumni_link", e.target.value)}
+                        />
+                        <select
+                          className="w-full border rounded-md p-2"
+                          value={link.alumni_link_name}
+                          onChange={(e) => handleSocialLinkChange(idx, "alumni_link_name", e.target.value)}
+                        >
+                          <option value="">Select Platform</option>
+                          <option value="LINKEDIN">LINKEDIN</option>
+                          <option value="GITHUB">GITHUB</option>
+                          <option value="FACEBOOK">FACEBOOK</option>
+                          <option value="INSTAGRAM">INSTAGRAM</option>
+                          <option value="REDDIT">REDDIT</option>
+                          <option value="OTHER">OTHER</option>
+                        </select>
+                        {socialLinks.length < 5 && (
+                          <button
+                            type="button"
+                            className="px-2 py-1 rounded bg-primary-foreground text-primary border border-primary-foreground font-bold"
+                            onClick={() => setSocialLinks([...socialLinks, { alumni_link: "", alumni_link_name: "" }])}
+                          >
+                            +
+                          </button>
+                        )}
+                        {socialLinks.length > 1 && (
+                          <button
+                            type="button"
+                            className="px-2 py-1 rounded bg-destructive text-white border border-destructive font-bold"
+                            onClick={() => setSocialLinks(socialLinks.filter((_, i) => i !== idx))}
+                          >
+                            -
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
               <Button type="submit">Sign In</Button>
             </form>
