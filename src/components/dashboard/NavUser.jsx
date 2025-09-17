@@ -1,5 +1,6 @@
 "use client"
 
+import { useNavigate } from "react-router-dom"
 import {
   BadgeCheck,
   Bell,
@@ -30,10 +31,18 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
+import { clearAuth } from "@/utils/auth"
+
 export function NavUser({
   user,
 }) {
   const { isMobile } = useSidebar()
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    clearAuth()              // Remove token and role from localStorage
+    navigate("/login")       // Redirect to login page
+  }
 
   return (
     <SidebarMenu>
@@ -55,6 +64,7 @@ export function NavUser({
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
@@ -73,14 +83,14 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
+
             <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
@@ -95,8 +105,11 @@ export function NavUser({
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+
+            {/* Log out button with onClick handler */}
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out
             </DropdownMenuItem>

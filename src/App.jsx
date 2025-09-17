@@ -1,24 +1,26 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import ProtectedRoute from "./components/login/protected"
 
-import { Home } from "@/pages/Home"
+import { Home } from "@/pages/Home"  // If you don't want to use Home, you can remove this import
 import { Dashboard } from "@/pages/Dashboard"
 import Community from "./pages/Community"
 
 function App() {
   return (
-    <Router>
+    <Router basename="/ams-frontend">
       <AppContent />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Redirect root / to /dashboard */}
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
         <Route path="/dashboard" element={
-          <ProtectedRoute role="ADMIN">
+           <ProtectedRoute role="ADMIN">
               <Dashboard />
-            </ProtectedRoute>
+          </ProtectedRoute>
           } />
 
           <Route path="/community" element={
@@ -45,4 +47,5 @@ function AppContent() {
     </>
   )
 }
+
 export default App
