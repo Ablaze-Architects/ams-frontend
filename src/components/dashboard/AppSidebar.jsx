@@ -29,7 +29,6 @@ const data = {
   teams: [
     {
       name: "Admin Panel",
-      // You can use any icon here
       logo: Calendar,
     },
   ],
@@ -39,7 +38,7 @@ const data = {
       url: "/admin/alumni-records",
       icon: BookOpen,
       isActive: true,
-      items: [], // no sub-items
+      items: [],
     },
     {
       title: "Events",

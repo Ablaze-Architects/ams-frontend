@@ -4,7 +4,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import ProtectedRoute from "./components/login/protected"
 
-import { Home } from "@/pages/Home"  // If you don't want to use Home, you can remove this import
+import { Home } from "@/pages/Home"
 import { Dashboard } from "@/pages/Dashboard"
 import Community from "./pages/Community"
 
