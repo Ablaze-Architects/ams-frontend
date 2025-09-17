@@ -38,6 +38,13 @@ export default defineConfig({
   server: {
     hmr: {
       overlay: true // Ensures error overlay shows up
-    }
+    },
+    proxy: {
+      '/api': {
+        target: 'https://ams-backend-dxh2.onrender.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+    },
   },
 })
