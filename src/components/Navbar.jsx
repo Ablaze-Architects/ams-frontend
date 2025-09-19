@@ -294,7 +294,7 @@ export default function AlumniNavbar() {
                 </Link>
                 <Link to="/signup">
                   <button className="px-3 mx-2 py-2 my-2 rounded-lg font-medium bg-primary-foreground text-primary hover:bg-primary-foreground/80 transition-all shadow-xs border border-primary-foreground">
-                    Sign Up
+                    Sign In
                   </button>
                 </Link>
               </>
