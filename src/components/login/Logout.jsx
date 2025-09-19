@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabaseClient";
 import { useNavigate } from "react-router-dom";
 
 export default function LogoutButton() {
@@ -7,10 +6,16 @@ export default function LogoutButton() {
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        alert("Cannot logout: userId not found.");
+        return;
+      }
+      const endpoint = `/api/user/${userId}/logout`;
+      await fetch(endpoint, { method: "POST", credentials: "include" });
 
       localStorage.removeItem("token");
-      localStorage.removeItem("role");
+      localStorage.removeItem("userId");
 
       navigate("/login");
     } catch (error) {

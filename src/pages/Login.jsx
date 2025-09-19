@@ -15,7 +15,7 @@ export default function Login() {
     e.preventDefault()
 
     try {
-  const res = await fetch("/api/user/login", {
+      const res = await fetch("/api/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -25,6 +25,7 @@ export default function Login() {
 
       if (res.ok) {
         setAuth(data.token, data.user.role)
+        localStorage.setItem("userId", data.user_id) 
 
         if (data.user.role === "ALUMNI") {
           navigate("/community")
