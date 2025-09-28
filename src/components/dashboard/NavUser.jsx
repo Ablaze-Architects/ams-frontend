@@ -1,6 +1,6 @@
 "use client"
 
-import { useNavigate } from "react-router-dom"
+// removed useNavigate; not used
 import { ChevronsUpDown, LogOut } from "lucide-react"
 import {
   Avatar,
@@ -22,19 +22,26 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { clearAuth, getUser } from "@/utils/auth"
+import { getUser } from "@/utils/auth"
 
-export function NavUser() {
+export function NavUser({ user: userProp }) {
   const { isMobile } = useSidebar()
-  const navigate = useNavigate()
-  const user = getUser()
+  const user = userProp || getUser() || {
+    name: "User",
+    email: "",
+    avatar: "/avatars/default.jpg",
+  }
+
+  const initials = (user.name || "U")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join("") || "U"
 
   console.log("User data in NavUser:", user)
 
-  function handleLogout() {
-    clearAuth()
-    navigate("/login")
-  }
+  // No local handleLogout; logout handled inline via menu item
 
   if (!user) {
     return null // Show nothing if user is not logged in
@@ -48,7 +55,7 @@ export function NavUser() {
             <SidebarMenuButton size="lg">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left leading-tight">
                 <span
@@ -78,7 +85,7 @@ export function NavUser() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">{initials}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left leading-tight">
                   <span
@@ -112,8 +119,6 @@ export function NavUser() {
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />
-
-            <DropdownMenuItem onClick={handleLogout}>
 
             <DropdownMenuItem onClick={async () => {
               try {

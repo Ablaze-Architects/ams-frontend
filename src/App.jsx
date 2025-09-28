@@ -14,8 +14,8 @@ function App() {
       <AppContent />
 
       <Routes>
-        {/* Redirect root / to /dashboard */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        {/* Redirect root / to /login */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
 
         <Route path="/dashboard" element={
              <Dashboard />
