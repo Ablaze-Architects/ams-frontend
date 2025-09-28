@@ -1,14 +1,7 @@
 "use client"
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react"
-
+import { useNavigate } from "react-router-dom"
+import { ChevronsUpDown, LogOut } from "lucide-react"
 import {
   Avatar,
   AvatarFallback,
@@ -29,34 +22,54 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { clearAuth, getUser } from "@/utils/auth"
 
-export function NavUser({
-  user,
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar()
+  const navigate = useNavigate()
+  const user = getUser()
+
+  console.log("User data in NavUser:", user)
+
+  function handleLogout() {
+    clearAuth()
+    navigate("/login")
+  }
+
+  if (!user) {
+    return null // Show nothing if user is not logged in
+  }
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
+            <SidebarMenuButton size="lg">
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+              <div className="grid flex-1 text-left leading-tight">
+                <span
+                  className="truncate"
+                  style={{ fontWeight: "bold", fontSize: "1.3rem" }}
+                >
+                  {user.name}
+                </span>
+                <span
+                  className="truncate text-xs"
+                  style={{ fontWeight: "normal", fontSize: "0.85rem" }}
+                >
+                  {user.email}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className="min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -67,35 +80,41 @@ export function NavUser({
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                <div className="grid flex-1 text-left leading-tight">
+                  <span
+                    className="truncate"
+                    style={{ fontWeight: "bold", fontSize: "1.3rem" }}
+                  >
+                    {user.name}
+                  </span>
+                  <span
+                    className="truncate text-xs"
+                    style={{ fontWeight: "normal", fontSize: "0.85rem" }}
+                  >
+                    {user.email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
+
             <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <CreditCard />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Bell />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
+
+            <DropdownMenuItem onClick={handleLogout}>
+
             <DropdownMenuItem onClick={async () => {
               try {
                 const userId = localStorage.getItem("userId");

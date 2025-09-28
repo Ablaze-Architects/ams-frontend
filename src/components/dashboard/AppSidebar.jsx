@@ -2,20 +2,14 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
   BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
+  Calendar,
+  CreditCard,
   PieChart,
   Settings2,
-  SquareTerminal,
 } from "lucide-react"
 
 import { NavMain } from "@/components/dashboard/NavMain"
-import { NavProjects } from "@/components/dashboard/NavProjects"
 import { NavUser } from "@/components/dashboard/NavUser"
 import { TeamSwitcher } from "@/components/dashboard/TeamSwitcher"
 import {
@@ -26,148 +20,75 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
+import { getUser } from "@/utils/auth" // ✅ fetch user from localStorage
+
+export function AppSidebar({ ...props }) {
+  // ✅ Get logged-in user OR fallback
+  const user = getUser() || {
+    name: "Guest",
+    email: "guest@example.com",
+    avatar: "/avatars/default.jpg",
+  }
+
+  const teams = [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      name: "Admin Panel",
+      logo: Calendar,
     },
+  ]
+
+  const navMain = [
     {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
+      title: "Alumni Records",
+      url: "/admin/alumni-records",
       icon: BookOpen,
+      isActive: true,
+      items: [],
+    },
+    {
+      title: "Events",
+      url: "/admin/events",
+      icon: Calendar,
       items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
+        { title: "Manage Events", url: "/admin/events" },
+        { title: "Add Event", url: "/admin/events/add" },
+        { title: "Invitations", url: "/admin/events/invitations" },
       ],
+    },
+    {
+      title: "Donations",
+      url: "/admin/donations",
+      icon: CreditCard,
+      items: [
+        { title: "All Donors", url: "/admin/donations" },
+        { title: "Add Donation", url: "/admin/donations/add" },
+      ],
+    },
+    {
+      title: "Analytics",
+      url: "/admin/analytics",
+      icon: PieChart,
+      items: [],
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/admin/settings",
       icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      items: [],
     },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-}
+  ]
 
-export function AppSidebar({ ...props }) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher teams={teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain items={navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {/* ✅ NavUser will now show displayName above email */}
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

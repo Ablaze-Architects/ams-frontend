@@ -13,12 +13,50 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault()
-
     try {
+      // Call login API
       const res = await fetch("/api/user/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+      })
+      const data = await res.json()
+
+      if (res.ok) {
+        const user = data.user
+        // Extract username and email reliably
+        const username =
+          user.admin_name ||
+          (user.metadata && user.metadata.display_name) ||
+          user.displayName ||
+          user.name ||
+          "User"
+        const userEmail = user.email || user.admin_email || ""
+        const avatar = user.admin_profile_picture_key
+          ? `/avatars/${user.admin_profile_picture_key}`
+          : "/avatars/default.jpg"
+
+        // Save to localStorage for sidebar/NavUser etc.
+        setAuth(
+          data.token || "",
+          user.role,
+          {
+            name: username,
+            email: userEmail,
+            avatar: avatar
+          }
+        )
+
+        // Redirect by role
+        const normalizedRole = user.role.trim().toUpperCase();
+
+        if (normalizedRole === "ALUMNI") {
+          navigate("/community")
+        } else if ( normalizedRole ===
+         "ADMIN")
+          {
+          navigate("/dashboard")
+          console.log("Admin user logged in:", user)
       });
 
       const data = await res.json();

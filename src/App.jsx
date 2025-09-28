@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
@@ -10,21 +10,19 @@ import Community from "./pages/Community"
 
 function App() {
   return (
-    <Router>
+    <Router basename="/ams-frontend">
       <AppContent />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Redirect root / to /dashboard */}
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
         <Route path="/dashboard" element={
-          <ProtectedRoute role="ADMIN">
-              <Dashboard />
-            </ProtectedRoute>
-          } />
+             <Dashboard />
+         } />
 
           <Route path="/community" element={
-            <ProtectedRoute role="ALUMNI">
               <Community />
-            </ProtectedRoute>
           } />
 
           <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
@@ -45,4 +43,5 @@ function AppContent() {
     </>
   )
 }
+
 export default App
