@@ -7,6 +7,8 @@ import ProtectedRoute from "./components/login/protected"
 import { Home } from "@/pages/Home"
 import { Dashboard } from "@/pages/Dashboard"
 import Community from "./pages/Community"
+import AddEvent from "./pages/AddEvent";
+import ManageEvents from "./pages/ManageEvents";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/admin/events/add" element={<AddEvent />} />
+        <Route path="/admin/events/manage" element={<ManageEvents />} />
       </Routes>
     </Router>
   )
