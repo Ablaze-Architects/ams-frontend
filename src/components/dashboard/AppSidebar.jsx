@@ -20,19 +20,24 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
+import { getUser } from "@/utils/auth" // ✅ fetch user from localStorage
+
+export function AppSidebar({ ...props }) {
+  // ✅ Get logged-in user OR fallback
+  const user = getUser() || {
+    name: "Guest",
+    email: "guest@example.com",
+    avatar: "/avatars/default.jpg",
+  }
+
+  const teams = [
     {
       name: "Admin Panel",
       logo: Calendar,
     },
-  ],
-  navMain: [
+  ]
+
+  const navMain = [
     {
       title: "Alumni Records",
       url: "/admin/alumni-records",
@@ -71,20 +76,19 @@ const data = {
       icon: Settings2,
       items: [],
     },
-  ],
-}
+  ]
 
-export function AppSidebar({ ...props }) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher teams={teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {/* ✅ NavUser will now show displayName above email */}
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

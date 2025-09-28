@@ -1,13 +1,10 @@
-
-
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { Button } from "@/components/login/Button"
 import { Input } from "@/components/login/Input"
 import { Card, CardHeader, CardContent, CardTitle, CardFooter } from "@/components/login/Card"
 import { Label } from "@/components/login/Label"
-
-
+import { setAuth } from "@/utils/auth" // Added import
 
 export default function Signup() {
   const [displayName, setDisplayName] = useState("");
@@ -16,7 +13,6 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [step, setStep] = useState(1);
-  // Alumni fields
   const [course, setCourse] = useState("");
   const [stream, setStream] = useState("");
   const [occupation, setOccupation] = useState("");
@@ -36,13 +32,18 @@ export default function Signup() {
 
   const handleAdminSignup = async () => {
     try {
-  const res = await fetch("/api/user/signup", {
+      const res = await fetch("/api/user/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ displayName, email, phone, password, role }),
       });
       const data = await res.json();
       if (res.ok) {
+        setAuth("", role, {
+          displayName: data.displayName || displayName,
+          email: data.email || email,
+          avatar: data.avatar || "/avatars/default.jpg",
+        });
         alert("Signup successful! Please login.");
         navigate("/login");
       } else {
@@ -57,7 +58,6 @@ export default function Signup() {
   const handleAlumniSignup = async (e) => {
     e.preventDefault();
     try {
-      // Only include socialLinks if at least one is filled
       const filteredLinks = socialLinks.filter(
         (l) => l.alumni_link.trim() && l.alumni_link_name.trim()
       );
@@ -73,13 +73,19 @@ export default function Signup() {
         yearOfGraduation,
         ...(filteredLinks.length > 0 ? { socialLinks: filteredLinks } : {}),
       };
-  const res = await fetch("/api/user/signup", {
+      const res = await fetch("/api/user/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(alumniBody),
       });
       const data = await res.json();
+      console.log("Signup API returned:", data);
       if (res.ok) {
+        setAuth("", role, {
+          displayName: data.displayName || displayName,
+          email: data.email || email,
+          avatar: data.avatar || "/avatars/default.jpg",
+        });
         alert("Signup successful! Please login.");
         navigate("/login");
       } else {

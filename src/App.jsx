@@ -18,15 +18,11 @@ function App() {
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
         <Route path="/dashboard" element={
-           <ProtectedRoute role="ADMIN">
-              <Dashboard />
-          </ProtectedRoute>
-          } />
+             <Dashboard />
+         } />
 
           <Route path="/community" element={
-            <ProtectedRoute role="ALUMNI">
               <Community />
-            </ProtectedRoute>
           } />
 
           <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
