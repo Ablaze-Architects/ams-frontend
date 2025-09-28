@@ -114,6 +114,23 @@ export function NavUser() {
             <DropdownMenuSeparator />
 
             <DropdownMenuItem onClick={handleLogout}>
+
+            <DropdownMenuItem onClick={async () => {
+              try {
+                const userId = localStorage.getItem("userId");
+                if (!userId) {
+                  alert("Cannot logout: userId not found.");
+                  return;
+                }
+                const endpoint = `/api/user/${userId}/logout`;
+                await fetch(endpoint, { method: "POST", credentials: "include" });
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+                window.location.href = "/ams-frontend/login";
+              } catch (error) {
+                console.error("Error logging out:", error.message);
+              }
+            }}>
               <LogOut />
               Log out
             </DropdownMenuItem>

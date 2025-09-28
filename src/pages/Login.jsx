@@ -57,15 +57,27 @@ export default function Login() {
           {
           navigate("/dashboard")
           console.log("Admin user logged in:", user)
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setAuth(data.token, data.user.role);
+        localStorage.setItem("userId", data.user.id); // Use correct key from backend response
+
+        if (data.user.role === "ALUMNI") {
+          navigate("/community");
+        } else if (data.user.role === "ADMIN") {
+          navigate("/dashboard");
         } else {
-          navigate("/unauthorized")
+          navigate("/unauthorized");
         }
       } else {
-        alert(data.message || "Invalid credentials. Please sign up first!")
+        alert(data.message || "Invalid credentials. Please sign up first!");
       }
     } catch (err) {
-      console.error(err)
-      alert("Something went wrong!")
+      console.error(err);
+      alert("Something went wrong!");
     }
   }
 
