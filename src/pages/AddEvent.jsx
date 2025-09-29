@@ -31,9 +31,9 @@ export default function AddEvent() {
         return;
       }
       const payload = {
-        name: (event_name || "").trim(),
-        dateTime: event_date_time ? new Date(event_date_time).toISOString() : null,
-        description: (event_description || "").trim(),
+        event_name: (event_name || "").trim(),
+        event_date_time: event_date_time ? new Date(event_date_time).toISOString() : null,
+        event_description: (event_description || "").trim(),
       };
       // Client-side validation mirroring backend requirements
       if (!payload.event_name) {
@@ -53,7 +53,7 @@ export default function AddEvent() {
         body: JSON.stringify(payload),
       });
       if (res.ok) {
-  navigate("/admin/events/manage");
+          navigate("/admin/events/manage");
       } else {
         let data = null;
         try {

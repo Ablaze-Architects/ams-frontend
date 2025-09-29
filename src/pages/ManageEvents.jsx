@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/login/Card";
+import { admin_id } from "./Login";
+
 
 export default function ManageEvents() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const adminId = localStorage.getItem("userId");
+    const adminId = admin_id || localStorage.getItem("userId");
     if (!adminId) return;
     fetch(`/api/events/${adminId}/getAllEvents`)
       .then(res => res.json())
-      .then(data => {
-        if (data.events) setEvents(data.events);
+      .then(response => {
+        console.log("API response:", response);
+        if (response.data) setEvents(response.data);
       });
   }, []);
 
@@ -26,11 +29,10 @@ export default function ManageEvents() {
           ) : (
             <ul className="space-y-4">
               {events.map(event => (
-                <li key={event.id} className="border rounded p-3">
-                  <div className="font-bold">{event.name}</div>
-                  <div>Date: {event.date}</div>
-                  <div>Location: {event.location}</div>
-                  <div>Description: {event.description}</div>
+                <li key={event.event_id} className="border rounded p-3">
+                  <div className="font-bold">{event.event_name}</div>
+                  <div>Description: {event.event_description}</div>
+                  <div>Date & Time: {event.event_date_time ? new Date(event.event_date_time).toLocaleString() : "N/A"}</div>
                 </li>
               ))}
             </ul>
