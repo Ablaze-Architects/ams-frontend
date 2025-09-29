@@ -17,7 +17,7 @@ export default function LogoutButton() {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
 
-      navigate("login");
+  navigate("/login");
     } catch (error) {
       console.error("Error logging out:", error.message);
     }

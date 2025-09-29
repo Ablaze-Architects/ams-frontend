@@ -4,10 +4,14 @@ import { Card, CardHeader, CardContent, CardTitle, CardFooter } from "@/componen
 import { Input } from "@/components/login/Input";
 import { Label } from "@/components/login/Label";
 import { Button } from "@/components/login/Button";
+import * as React from 'react';
+import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import TextField from '@mui/material/TextField';
 
 export default function AddEvent() {
   const [eventName, setEventName] = useState("");
-  const [eventDate, setEventDate] = useState("");
+  const [eventDateTime, setEventDateTime] = useState(null);
   const [eventDescription, setEventDescription] = useState("");
   const navigate = useNavigate();
 
@@ -24,12 +28,12 @@ export default function AddEvent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: eventName,
-          date: eventDate,
+          dateTime: eventDateTime,
           description: eventDescription,
         }),
       });
       if (res.ok) {
-  navigate("admin/events/manage");
+  navigate("/admin/events/manage");
       } else {
         const data = await res.json();
         alert(data.message || "Failed to add event.");
@@ -38,7 +42,6 @@ export default function AddEvent() {
       alert("Error adding event.");
     }
   };
-
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <Card className="w-[400px]">
@@ -46,14 +49,21 @@ export default function AddEvent() {
           <CardTitle>Add Event</CardTitle>
         </CardHeader>
         <CardContent>
-          <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
               <Label>Event Name</Label>
               <Input type="text" value={eventName} onChange={e => setEventName(e.target.value)} required />
             </div>
             <div>
-              <Label>Date</Label>
-              <Input type="date" value={eventDate} onChange={e => setEventDate(e.target.value)} required />
+              <Label>Date & Time</Label>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateTimePicker
+                  label="Select Date & Time"
+                  value={eventDateTime}
+                  onChange={setEventDateTime}
+                  renderInput={(params) => <TextField {...params} fullWidth />}
+                />
+              </LocalizationProvider>
             </div>
             <div>
               <Label>Description</Label>
@@ -62,7 +72,6 @@ export default function AddEvent() {
             <Button type="submit">Add Event</Button>
           </form>
         </CardContent>
-    
       </Card>
     </div>
   );

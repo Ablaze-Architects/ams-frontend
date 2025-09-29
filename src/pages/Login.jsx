@@ -51,12 +51,12 @@ export default function Login() {
         const normalizedRole = (user.role || "").trim().toUpperCase()
 
         if (normalizedRole === "ALUMNI") {
-          navigate("community")
+          navigate("/community")
         } else if (normalizedRole === "ADMIN") {
-          navigate("dashboard")
+          navigate("/dashboard")
           console.log("Admin user logged in:", user)
         } else {
-          navigate("unauthorized")
+          navigate("/unauthorized")
         }
       } else {
         alert(data.message || "Invalid credentials. Please sign up first!")
@@ -89,7 +89,7 @@ export default function Login() {
         <CardFooter>
           <p className="text-sm">
             Don't have an account?{" "}
-            <Link to="signup" className="text-blue-600">Sign Up</Link>
+            <Link to="/signup" className="text-blue-600">Sign Up</Link>
           </p>
         </CardFooter>
       </Card>
