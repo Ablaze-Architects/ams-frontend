@@ -7,35 +7,61 @@ import { Button } from "@/components/login/Button";
 import * as React from 'react';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import TextField from '@mui/material/TextField';
+import { admin_id } from "./Login";
+import { getRole } from "../utils/auth";
 
 export default function AddEvent() {
-  const [eventName, setEventName] = useState("");
-  const [eventDateTime, setEventDateTime] = useState(null);
-  const [eventDescription, setEventDescription] = useState("");
+  const [event_name, setevent_name] = useState("");
+  const [event_date_time, setevent_date_time] = useState(null);
+  const [event_description, setevent_description] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const adminId = localStorage.getItem("userId");
+      const role = (getRole() || "").trim().toUpperCase();
+      const adminId = admin_id || localStorage.getItem("adminId");
+      console.log("[AddEvent] role=", role, "exported admin_id=", admin_id, "localStorage adminId=", localStorage.getItem("adminId"));
+      if (role !== "ADMIN") {
+        alert("Only admins can add events. Please login as an admin.");
+        return;
+      }
       if (!adminId) {
         alert("Admin ID not found. Please login again.");
         return;
       }
+      const payload = {
+        name: (event_name || "").trim(),
+        dateTime: event_date_time ? new Date(event_date_time).toISOString() : null,
+        description: (event_description || "").trim(),
+      };
+      // Client-side validation mirroring backend requirements
+      if (!payload.event_name) {
+        alert("Event name is required");
+        console.warn("[AddEvent] Missing name in payload", payload);
+        return;
+      }
+      if (!payload.event_date_time) {
+        alert("Event date/time is required");
+        console.warn("[AddEvent] Missing dateTime in payload", payload);
+        return;
+      }
+      console.log("[AddEvent] POST /api/events/:adminId/createEvent payload=", payload);
       const res = await fetch(`/api/events/${adminId}/createEvent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: eventName,
-          dateTime: eventDateTime,
-          description: eventDescription,
-        }),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
   navigate("/admin/events/manage");
       } else {
-        const data = await res.json();
+        let data = null;
+        try {
+          data = await res.json();
+        } catch (parseErr) {
+          console.warn("[AddEvent] Failed to parse error JSON", parseErr);
+        }
+        console.error("[AddEvent] API error", { status: res.status, data });
         alert(data.message || "Failed to add event.");
       }
     } catch {
@@ -52,22 +78,26 @@ export default function AddEvent() {
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
               <Label>Event Name</Label>
-              <Input type="text" value={eventName} onChange={e => setEventName(e.target.value)} required />
+              <Input type="text" value={event_name} onChange={e => setevent_name(e.target.value)} required />
             </div>
             <div>
               <Label>Date & Time</Label>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateTimePicker
-                  label="Select Date & Time"
-                  value={eventDateTime}
-                  onChange={setEventDateTime}
-                  renderInput={(params) => <TextField {...params} fullWidth />}
+                  value={event_date_time}
+                  onChange={(newValue) => setevent_date_time(newValue)}
+                  slotProps={{
+                    textField: {
+                      fullWidth: true,
+                      label: 'Select Date & Time'
+                    }
+                  }}
                 />
               </LocalizationProvider>
             </div>
             <div>
               <Label>Description</Label>
-              <Input type="text" value={eventDescription} onChange={e => setEventDescription(e.target.value)} />
+              <Input type="text" value={event_description} onChange={e => setevent_description(e.target.value)} />
             </div>
             <Button type="submit">Add Event</Button>
           </form>
