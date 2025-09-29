@@ -6,6 +6,10 @@ import { Card, CardHeader, CardContent, CardTitle, CardFooter } from "@/componen
 import { Label } from "@/components/login/Label"
 import { setAuth } from "../utils/auth"
 
+// Exported runtime-updated IDs for cross-module use
+export let admin_id = null
+export let alumni_id = null
+
 export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -49,6 +53,18 @@ export default function Login() {
 
         // Redirect by role
         const normalizedRole = (user.role || "").trim().toUpperCase()
+
+        // Update exported ids based on role
+        if (normalizedRole === "ADMIN") {
+          admin_id = user.id || null
+          alumni_id = null
+        } else if (normalizedRole === "ALUMNI") {
+          alumni_id = user.id || null
+          admin_id = null
+        } else {
+          admin_id = null
+          alumni_id = null
+        }
 
         if (normalizedRole === "ALUMNI") {
           navigate("/community")
