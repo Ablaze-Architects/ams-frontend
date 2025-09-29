@@ -17,21 +17,15 @@ function App() {
 
       <Routes>
         {/* Redirect root / to /login */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Navigate to="login" replace />} />
 
-        <Route path="/dashboard" element={
-             <Dashboard />
-         } />
-
-          <Route path="/community" element={
-              <Community />
-          } />
-
-          <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/admin/events/add" element={<AddEvent />} />
-        <Route path="/admin/events/manage" element={<ManageEvents />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="community" element={<Community />} />
+        <Route path="unauthorized" element={<h1>Unauthorized Access</h1>} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="admin/events/add" element={<AddEvent />} />
+        <Route path="admin/events/manage" element={<ManageEvents />} />
       </Routes>
     </Router>
   )

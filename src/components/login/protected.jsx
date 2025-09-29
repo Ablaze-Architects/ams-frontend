@@ -8,7 +8,7 @@ export default function ProtectedRoute({ children, role }) {
   console.log("ProtectedRoute - token:", token, "role:", userRole);
 
   // Redirect to login if no token found
-  if (!token) return <Navigate to="/login" replace />;
+  if (!token) return <Navigate to="login" replace />;
 
   // Check role permission
   if (role) {
@@ -21,7 +21,7 @@ export default function ProtectedRoute({ children, role }) {
       return children;
     } else {
       // Unauthorized access
-      return <Navigate to="/unauthorized" replace />;
+  return <Navigate to="unauthorized" replace />;
     }
   }
 

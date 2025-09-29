@@ -9,12 +9,16 @@ export default function AddEvent() {
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [adminId, setAdminId] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const adminId = localStorage.getItem("userId");
+      if (!adminId) {
+        alert("Admin ID not found. Please login again.");
+        return;
+      }
       const res = await fetch(`/api/events/${adminId}/createEvent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -25,7 +29,7 @@ export default function AddEvent() {
         }),
       });
       if (res.ok) {
-        navigate("/admin/events/manage");
+  navigate("admin/events/manage");
       } else {
         const data = await res.json();
         alert(data.message || "Failed to add event.");
@@ -43,10 +47,6 @@ export default function AddEvent() {
         </CardHeader>
         <CardContent>
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-            <div>
-              <Label>Admin ID</Label>
-              <Input type="text" value={adminId} onChange={e => setAdminId(e.target.value)} required />
-            </div>
             <div>
               <Label>Event Name</Label>
               <Input type="text" value={eventName} onChange={e => setEventName(e.target.value)} required />

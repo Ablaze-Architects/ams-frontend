@@ -27,25 +27,25 @@ import {
 const alumniFeatures = [
   {
     title: "Alumni Directory",
-    href: "/alumni/directory",
+    href: "alumni/directory",
     icon: <UsersIcon className="h-4 w-4" />,
     description: "Browse and search through our comprehensive alumni database with filters and contact information.",
   },
   {
     title: "Success Stories",
-    href: "/alumni/stories",
+    href: "alumni/stories",
     icon: <AwardIcon className="h-4 w-4" />,
     description: "Read inspiring career journeys and achievements of our distinguished alumni.",
   },
   {
     title: "Mentorship Program",
-    href: "/mentorship",
+    href: "mentorship",
     icon: <HeartHandshakeIcon className="h-4 w-4" />,
     description: "Connect current students with experienced alumni for guidance and career support.",
   },
   {
     title: "Job Board",
-    href: "/jobs",
+    href: "jobs",
     icon: <BriefcaseIcon className="h-4 w-4" />,
     description: "Explore career opportunities posted by alumni companies and partner organizations.",
   },
@@ -54,25 +54,25 @@ const alumniFeatures = [
 const dashboardSections = [
   {
     title: "Alumni Analytics",
-    href: "/dashboard/analytics",
+    href: "dashboard/analytics",
     icon: <BarChart3Icon className="h-4 w-4" />,
     description: "View comprehensive statistics about alumni engagement, career progression, and demographics.",
   },
   {
     title: "Event Management",
-    href: "/dashboard/events",
+    href: "dashboard/events",
     icon: <CalendarIcon className="h-4 w-4" />,
     description: "Create, manage, and track alumni events, reunions, and networking sessions.",
   },
   {
     title: "Communication Hub",
-    href: "/dashboard/communications",
+    href: "dashboard/communications",
     icon: <MessageCircleIcon className="h-4 w-4" />,
     description: "Send newsletters, announcements, and manage communication campaigns with alumni.",
   },
   {
     title: "Donation Tracking",
-    href: "/dashboard/donations",
+    href: "dashboard/donations",
     icon: <TrendingUpIcon className="h-4 w-4" />,
     description: "Monitor fundraising campaigns, track donations, and manage donor relationships.",
   },
@@ -99,7 +99,7 @@ export default function AlumniNavbar() {
                     <NavigationMenuLink asChild>
                       <Link
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-secondary/20 p-6 no-underline outline-none focus:shadow-md hover:bg-secondary/30 transition-all duration-200"
-                        to="/"
+                        to=""
                       >
                         <GraduationCapIcon className="h-6 w-6 mb-2 text-primary" />
                         <div className="mb-2 mt-4 text-lg font-medium text-foreground">Alumni Management System</div>
@@ -114,7 +114,7 @@ export default function AlumniNavbar() {
                   <li>
                     <NavigationMenuLink asChild>
                       <Link
-                        to="/about"
+                        to="about"
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground"
                       >
                         <div className="flex items-center gap-2">
@@ -130,7 +130,7 @@ export default function AlumniNavbar() {
                   <li>
                     <NavigationMenuLink asChild>
                       <Link
-                        to="/news"
+                        to="news"
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground"
                       >
                         <div className="flex items-center gap-2">
@@ -146,7 +146,7 @@ export default function AlumniNavbar() {
                   <li>
                     <NavigationMenuLink asChild>
                       <Link
-                        to="/contact"
+                        to="contact"
                         className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground"
                       >
                         <div className="flex items-center gap-2">
@@ -288,12 +288,12 @@ export default function AlumniNavbar() {
           <div className="flex items-center ml-auto gap-2">
             {!isAuthenticated && (
               <>
-                <Link to="/login">
+                <Link to="login">
                   <button className="px-3 mx-2 py-2 my-2 rounded-lg font-medium bg-primary-foreground text-primary hover:bg-primary-foreground/80 transition-all shadow-xs border border-primary-foreground">
                     Login
                   </button>
                 </Link>
-                <Link to="/signup">
+                <Link to="signup">
                   <button className="px-3 mx-2 py-2 my-2 rounded-lg font-medium bg-primary-foreground text-primary hover:bg-primary-foreground/80 transition-all shadow-xs border border-primary-foreground">
                     Sign In
                   </button>
