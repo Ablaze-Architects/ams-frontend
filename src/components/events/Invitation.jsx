@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getUser } from "../../utils/auth";
+import { alumni_id as exportedAlumniId } from "../../pages/Login.jsx";
 
-const BASE_URL = "https://ams-backend-dxh2.onrender.com";
 const DEFAULT_POSTER = "/default-poster.jpg";
 
 export default function InvitationPage() {
@@ -10,8 +9,7 @@ export default function InvitationPage() {
   const [error, setError] = useState("");
 
   // Read stored user on startup
-  const user = getUser();
-  const alumniId = user?.id || "";
+  const alumniId = exportedAlumniId || "";
 
   useEffect(() => {
     if (!alumniId) {
@@ -22,7 +20,7 @@ export default function InvitationPage() {
     async function fetchInvitations() {
       try {
         setLoading(true);
-        const response = await fetch(`${BASE_URL}/api/messages/${alumniId}/getAllInvitations`);
+        const response = await fetch(`/api/messages/${alumniId}/getAllInvitations`);
         const data = await response.json();
         if (response.ok && data.success) {
           setInvitations(data.invitations);
@@ -61,7 +59,7 @@ export default function InvitationPage() {
         {invitations.map((inv) => {
           const event = inv.events || {};
           const { date, time } = formatDateTime(event.event_date_time);
-          const posterSrc = event.event_poster_key ? `${BASE_URL}/uploads/${event.event_poster_key}` : DEFAULT_POSTER;
+          const posterSrc = event.event_poster_key ? `/api/uploads/${event.event_poster_key}` : DEFAULT_POSTER;
           return (
             <div key={inv.alumni_invitation_id} className="bg-white rounded shadow p-4 flex flex-col">
               <img
