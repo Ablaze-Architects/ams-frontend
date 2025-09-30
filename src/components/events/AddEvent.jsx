@@ -7,8 +7,8 @@ import { Button } from "@/components/login/Button";
 import * as React from 'react';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { admin_id } from "./Login";
-import { getRole } from "../utils/auth";
+import { admin_id } from "../../pages/Login";
+import { getRole } from "../../utils/auth";
 
 export default function AddEvent() {
   const [event_name, setevent_name] = useState("");

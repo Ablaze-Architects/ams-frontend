@@ -9,10 +9,15 @@ import { Dashboard } from "@/pages/Dashboard";
 import Community from "./pages/Community";
 import InvitationPage from "./components/events/Invitation";
 import AlumniDirectory from "./pages/AlumniDirectory";
+<<<<<<< HEAD
 import ManageInvitations from "./pages/ManageInvitations";
 import AddInvitation from "./pages/AddInvitation";
 import AddEvent from "./pages/AddEvent";
 import ManageEvents from "./pages/ManageEvents";
+=======
+import AddEvent from "./components/events/AddEvent";
+import ManageEvents from "./components/events/ManageEvents";
+>>>>>>> 30acd474244c69d5d0cebea81f7b7ca885172436
 
 function App() {
   return (
@@ -28,10 +33,16 @@ function App() {
         }>
             <Route index element={<div />} />
             <Route path="alumni-records" element={<AlumniDirectory />} />
+<<<<<<< HEAD
             <Route path="events" element={<div>Manage Events</div>} />
             <Route path="events/add" element={<div>Add Event</div>} />
             <Route path="invitations" element={<ManageInvitations />} />
             <Route path="invitations/add" element={<AddInvitation />} />
+=======
+            <Route path="events" element={<ManageEvents />} />
+            <Route path="events/add" element={<AddEvent />} />
+            <Route path="events/invitations" element={<InvitationPage />} />
+>>>>>>> 30acd474244c69d5d0cebea81f7b7ca885172436
             
         </Route>
 
