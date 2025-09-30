@@ -8,6 +8,7 @@ import { Home } from "@/pages/Home";
 import { Dashboard } from "@/pages/Dashboard";
 import Community from "./pages/Community";
 import InvitationPage from "./components/events/Invitation";
+import AlumniDirectory from "./pages/AlumniDirectory";
 
 
 function App() {
@@ -29,6 +30,11 @@ function App() {
         <Route path="/events/invitations" element={
           <InvitationPage />
         } />
+
+        <Route path="/alumnidir" element={
+          <AlumniDirectory />
+        } />
+        
 
         <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
         <Route path="/login" element={<Login />} />
