@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/login/Card";
-import { admin_id } from "./Login";
 
 
 export default function ManageEvents() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const adminId = admin_id || localStorage.getItem("userId");
+    // Prefer persisted admin id so it works across reloads and direct navigation
+    const adminId = localStorage.getItem("adminId");
+    console.log("[ManageEvents] adminId=", adminId);
     if (!adminId) return;
     fetch(`/api/events/${adminId}/getAllEvents`)
       .then(res => res.json())
