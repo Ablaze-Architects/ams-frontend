@@ -27,7 +27,7 @@ import {
 const alumniFeatures = [
   {
     title: "Alumni Directory",
-    href: "/alumni/directory",
+    href: "/alumnidir",
     icon: <UsersIcon className="h-4 w-4" />,
     description: "Browse and search through our comprehensive alumni database with filters and contact information.",
   },
@@ -81,6 +81,7 @@ const dashboardSections = [
 export default function AlumniNavbar() {
   const isAuthenticated = !!getToken();
   const role = localStorage.getItem("role");
+  
   return (
     <div className="w-full bg-primary shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
