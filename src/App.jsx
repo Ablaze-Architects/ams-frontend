@@ -9,8 +9,8 @@ import { Dashboard } from "@/pages/Dashboard";
 import Community from "./pages/Community";
 import InvitationPage from "./components/events/Invitation";
 import AlumniDirectory from "./pages/AlumniDirectory";
-import AddEvent from "./pages/AddEvent";
-import ManageEvents from "./pages/ManageEvents";
+import AddEvent from "./components/events/AddEvent";
+import ManageEvents from "./components/events/ManageEvents";
 
 function App() {
   return (
@@ -26,8 +26,8 @@ function App() {
         }>
             <Route index element={<div />} />
             <Route path="alumni-records" element={<AlumniDirectory />} />
-            <Route path="events" element={<div>Manage Events</div>} />
-            <Route path="events/add" element={<div>Add Event</div>} />
+            <Route path="events" element={<ManageEvents />} />
+            <Route path="events/add" element={<AddEvent />} />
             <Route path="events/invitations" element={<InvitationPage />} />
             
         </Route>
