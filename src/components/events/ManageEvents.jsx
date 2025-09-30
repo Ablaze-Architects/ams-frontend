@@ -11,7 +11,7 @@ export default function ManageEvents() {
     // Prefer persisted admin id so it works across reloads and direct navigation
     const adminId = localStorage.getItem("adminId");
     console.log("[ManageEvents] adminId=", adminId);
-    if (!adminId) return;
+    // if (!adminId) return;
     fetch(`/api/events/${adminId}/getAllEvents`)
       .then(res => res.json())
       .then(response => {
