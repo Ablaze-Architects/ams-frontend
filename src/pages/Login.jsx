@@ -7,6 +7,9 @@ import { Label } from "@/components/login/Label"
 import { setAuth } from "../utils/auth"
 
 // Exported runtime-updated IDs for cross-module use
+export let adminId = null
+export let alumniId = null
+// Backward compatibility exports (keep in sync)
 export let admin_id = null
 export let alumni_id = null
 
@@ -45,6 +48,7 @@ export default function Login() {
           data.token || "",
           user.role,
           {
+            id: user.id || user.admin_id || null,
             name: username,
             email: userEmail,
             avatar: avatar
@@ -53,47 +57,36 @@ export default function Login() {
 
         // Redirect by role
         const normalizedRole = (user.role || "").trim().toUpperCase()
-        // Prefer role-specific backend IDs, then fall back
-        // ADMIN -> user.admin_id || user.id || user._id
-        // ALUMNI -> user.alumni_id || user.id || user._id
-        // Update exported ids based on role and persist for reloads
+        // Per requirement: store user.id into adminId (ADMIN) or alumniId (ALUMNI)
         if (normalizedRole === "ADMIN") {
-          const resolvedUserId = user.admin_id || user.id || user._id || null
-          admin_id = resolvedUserId
-          alumni_id = null
-          if (resolvedUserId) {
-            localStorage.setItem("adminId", String(resolvedUserId))
+          adminId = user.id || null
+          alumniId = null
+          admin_id = adminId
+          alumni_id = alumniId
+          if (adminId) {
+            localStorage.setItem("adminId", String(adminId))
             localStorage.removeItem("alumniId")
           }
-          console.log("[Login] Set ADMIN id:", resolvedUserId)
+          console.log("[Login] Set ADMIN id:", adminId)
         } else if (normalizedRole === "ALUMNI") {
-          const resolvedUserId = user.alumni_id || user.id || user._id || null
-          alumni_id = resolvedUserId
-          admin_id = null
-          if (resolvedUserId) {
-            localStorage.setItem("alumniId", String(resolvedUserId))
+          alumniId = user.id || null
+          adminId = null
+          alumni_id = alumniId
+          admin_id = adminId
+          if (alumniId) {
+            localStorage.setItem("alumniId", String(alumniId))
             localStorage.removeItem("adminId")
           }
-          console.log("[Login] Set ALUMNI id:", resolvedUserId)
+          console.log("[Login] Set ALUMNI id:", alumniId)
         } else {
+          adminId = null
+          alumniId = null
           admin_id = null
           alumni_id = null
           localStorage.removeItem("adminId")
           localStorage.removeItem("alumniId")
         }
         console.log("[Login] role:", normalizedRole)
-
-        // Update exported ids based on role
-        if (normalizedRole === "ADMIN") {
-          admin_id = user.id || null
-          alumni_id = null
-        } else if (normalizedRole === "ALUMNI") {
-          alumni_id = user.id || null
-          admin_id = null
-        } else {
-          admin_id = null
-          alumni_id = null
-        }
 
         if (normalizedRole === "ALUMNI") {
           navigate("/community")

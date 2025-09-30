@@ -9,6 +9,8 @@ import { Dashboard } from "@/pages/Dashboard";
 import Community from "./pages/Community";
 import InvitationPage from "./components/events/Invitation";
 import AlumniDirectory from "./pages/AlumniDirectory";
+import ManageInvitations from "./pages/ManageInvitations";
+import AddInvitation from "./pages/AddInvitation";
 import AddEvent from "./pages/AddEvent";
 import ManageEvents from "./pages/ManageEvents";
 
@@ -28,7 +30,8 @@ function App() {
             <Route path="alumni-records" element={<AlumniDirectory />} />
             <Route path="events" element={<div>Manage Events</div>} />
             <Route path="events/add" element={<div>Add Event</div>} />
-            <Route path="events/invitations" element={<InvitationPage />} />
+            <Route path="invitations" element={<ManageInvitations />} />
+            <Route path="invitations/add" element={<AddInvitation />} />
             
         </Route>
 

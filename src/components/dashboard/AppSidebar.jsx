@@ -7,6 +7,7 @@ import {
   CreditCard,
   PieChart,
   Settings2,
+  Mail,
 } from "lucide-react"
 
 import { NavMain } from "@/components/dashboard/NavMain"
@@ -52,7 +53,15 @@ export function AppSidebar({ ...props }) {
       items: [
         { title: "Manage Events", url: "/dashboard/events" },
         { title: "Add Event", url: "/dashboard/events/add" },
-        { title: "Invitations", url: "/dashboard/events/invitations" },
+      ],
+    },
+    {
+      title: "Invitations",
+      url: "/dashboard/invitations",
+      icon: Mail,
+      items: [
+        { title: "Manage Invitation", url: "/dashboard/invitations" },
+        { title: "Add Invitation", url: "/dashboard/invitations/add" },
       ],
     },
     {
