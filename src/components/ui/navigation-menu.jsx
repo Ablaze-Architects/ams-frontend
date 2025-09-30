@@ -1,8 +1,7 @@
 import * as React from "react"
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
-import { cva } from "class-variance-authority"
 import { ChevronDownIcon } from "lucide-react"
-
+import { navigationMenuTriggerStyle } from "./navigation-menu-styles"
 import { cn } from "@/lib/utils"
 
 function NavigationMenu({
@@ -50,9 +49,7 @@ function NavigationMenuItem({
   );
 }
 
-const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-primary-foreground focus:bg-accent focus:text-primary-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:bg-accent data-[state=open]:text-primary-foreground" 
-)
+
 
 function NavigationMenuTrigger({
   className,
@@ -148,5 +145,4 @@ export {
   NavigationMenuLink,
   NavigationMenuIndicator,
   NavigationMenuViewport,
-  navigationMenuTriggerStyle,
 }

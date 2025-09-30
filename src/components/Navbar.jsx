@@ -27,7 +27,7 @@ import {
 const alumniFeatures = [
   {
     title: "Alumni Directory",
-    href: "alumni/directory",
+    href: "/alumnidir",
     icon: <UsersIcon className="h-4 w-4" />,
     description: "Browse and search through our comprehensive alumni database with filters and contact information.",
   },
@@ -81,12 +81,14 @@ const dashboardSections = [
 export default function AlumniNavbar() {
   const isAuthenticated = !!getToken();
   const role = localStorage.getItem("role");
+  
   return (
     <div className="w-full bg-primary shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between w-full">
           <NavigationMenu>
             <NavigationMenuList className="flex-wrap gap-1">
+
             {/* HOME SECTION */}
             <NavigationMenuItem>
               <NavigationMenuTrigger className="bg-accent hover:bg-accent/80 text-accent-foreground data-[state=open]:bg-accent/80 data-[active]:bg-accent/80 font-medium px-6 py-2 rounded-lg transition-all duration-200">
@@ -163,128 +165,146 @@ export default function AlumniNavbar() {
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-            {/* ALUMNI SECTION */}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent hover:bg-primary-foreground/10 text-primary-foreground data-[state=open]:bg-primary-foreground/10 data-[active]:bg-primary-foreground/10 font-medium px-4 py-2 rounded-lg transition-all duration-200">
-                Alumni
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  {alumniFeatures.map((feature) => (
-                    <li key={feature.title}>
+
+              {/* ALUMNI SECTION */}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent hover:bg-primary-foreground/10 text-primary-foreground data-[state=open]:bg-primary-foreground/10 data-[active]:bg-primary-foreground/10 font-medium px-4 py-2 rounded-lg transition-all duration-200">
+                  Alumni
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    {alumniFeatures.map((feature) => (
+                      <li key={feature.title}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to={feature.href}
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-primary">
+                                {React.cloneElement(feature.icon, {
+                                  className: "h-4 w-4",
+                                })}
+                              </span>
+                              <div className="text-sm font-medium leading-none">{feature.title}</div>
+                            </div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              {feature.description}
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              {/* EVENTS SECTION */}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent hover:bg-primary-foreground/10 text-primary-foreground data-[state=open]:bg-primary-foreground/10 data-[active]:bg-primary-foreground/10 font-medium px-4 py-2 rounded-lg transition-all duration-200">
+                  Event Invitations
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[300px] gap-2 p-4">
+                    <li>
                       <NavigationMenuLink asChild>
                         <Link
-                          to={feature.href}
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground"
+                          to="/events/upcoming"
+                          className="flex items-center gap-3 p-3 rounded-md transition-colors hover:bg-accent/10 hover:text-accent-foreground"
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="text-primary">
-                              {React.cloneElement(feature.icon, {
-                                className: "h-4 w-4",
-                              })}
-                            </span>
-                            <div className="text-sm font-medium leading-none">{feature.title}</div>
+                          <CalendarIcon className="h-5 w-5 text-primary flex-shrink-0" />
+                          <div className="flex-1">
+                            <div className="font-medium">Upcoming Events</div>
+                            <div className="text-sm text-muted-foreground mt-1">
+                              Register for reunions, networking sessions, and webinars.
+                            </div>
                           </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            {feature.description}
-                          </p>
                         </Link>
                       </NavigationMenuLink>
                     </li>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            {/* EVENTS SECTION */}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent hover:bg-primary-foreground/10 text-primary-foreground data-[state=open]:bg-primary-foreground/10 data-[active]:bg-primary-foreground/10 font-medium px-4 py-2 rounded-lg transition-all duration-200">
-                Events
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[300px] gap-2 p-4">
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        to="/events/upcoming"
-                        className="flex items-center gap-3 p-3 rounded-md transition-colors hover:bg-accent/10 hover:text-accent-foreground"
-                      >
-                        <CalendarIcon className="h-5 w-5 text-primary flex-shrink-0" />
-                        <div className="flex-1">
-                          <div className="font-medium">Upcoming Events</div>
-                          <div className="text-sm text-muted-foreground mt-1">
-                            Register for reunions, networking sessions, and webinars.
-                          </div>
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        to="/events/past"
-                        className="flex items-center gap-3 p-3 rounded-md transition-colors hover:bg-accent/10 hover:text-accent-foreground"
-                      >
-                        <AwardIcon className="h-5 w-5 text-primary flex-shrink-0" />
-                        <div className="flex-1">
-                          <div className="font-medium">Past Events</div>
-                          <div className="text-sm text-muted-foreground mt-1">
-                            View photos, videos, and highlights from previous events.
-                          </div>
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            {/* DASHBOARD SECTION - Simple Link */}
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link
-                  to="/dashboard"
-                  className="inline-flex h-10 w-max items-center justify-center rounded-lg bg-transparent px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/10 focus:bg-primary-foreground/10 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                >
-                  Dashboard
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-
-            {/* ADMIN SECTION */}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent hover:bg-primary-foreground/10 text-primary-foreground data-[state=open]:bg-primary-foreground/10 data-[active]:bg-primary-foreground/10 font-medium px-4 py-2 rounded-lg transition-all duration-200">
-                Admin
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  {dashboardSections.map((section) => (
-                    <li key={section.title}>
+                    <li>
                       <NavigationMenuLink asChild>
                         <Link
-                          to={section.href}
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground"
+                          to="/events/past"
+                          className="flex items-center gap-3 p-3 rounded-md transition-colors hover:bg-accent/10 hover:text-accent-foreground"
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="text-primary">
-                              {React.cloneElement(section.icon, {
-                                className: "h-4 w-4",
-                              })}
-                            </span>
-                            <div className="text-sm font-medium leading-none">{section.title}</div>
+                          <AwardIcon className="h-5 w-5 text-primary flex-shrink-0" />
+                          <div className="flex-1">
+                            <div className="font-medium">Past Events</div>
+                            <div className="text-sm text-muted-foreground mt-1">
+                              View photos, videos, and highlights from previous events.
+                            </div>
                           </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            {section.description}
-                          </p>
                         </Link>
                       </NavigationMenuLink>
                     </li>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          to="/events/invitations"
+                          className="flex items-center gap-3 p-3 rounded-md transition-colors hover:bg-accent/10 hover:text-accent-foreground"
+                        >
+                          <BriefcaseIcon className="h-5 w-5 text-primary flex-shrink-0" />
+                          <div className="flex-1">
+                            <div className="font-medium">Invitation</div>
+                            <div className="text-sm text-muted-foreground mt-1">
+                              Manage, send, and track your alumni event invitations.
+                            </div>
+                          </div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              {/* DASHBOARD SECTION */}
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild>
+                  <Link
+                    to="/dashboard"
+                    className="inline-flex h-10 w-max items-center justify-center rounded-lg bg-transparent px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-foreground/10 focus:bg-primary-foreground/10 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                  >
+                    Dashboard
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              {/* ADMIN SECTION */}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent hover:bg-primary-foreground/10 text-primary-foreground data-[state=open]:bg-primary-foreground/10 data-[active]:bg-primary-foreground/10 font-medium px-4 py-2 rounded-lg transition-all duration-200">
+                  Admin
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    {dashboardSections.map((section) => (
+                      <li key={section.title}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to={section.href}
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent/10 hover:text-accent-foreground"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-primary">
+                                {React.cloneElement(section.icon, {
+                                  className: "h-4 w-4",
+                                })}
+                              </span>
+                              <div className="text-sm font-medium leading-none">{section.title}</div>
+                            </div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                              {section.description}
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
+
           <div className="flex items-center ml-auto gap-2">
             {!isAuthenticated && (
               <>
@@ -295,7 +315,7 @@ export default function AlumniNavbar() {
                 </Link>
                 <Link to="/signup">
                   <button className="px-3 mx-2 py-2 my-2 rounded-lg font-medium bg-primary-foreground text-primary hover:bg-primary-foreground/80 transition-all shadow-xs border border-primary-foreground">
-                    Sign In
+                    Sign Up
                   </button>
                 </Link>
               </>
@@ -307,5 +327,5 @@ export default function AlumniNavbar() {
         </div>
       </div>
     </div>
-  )
+  );
 }

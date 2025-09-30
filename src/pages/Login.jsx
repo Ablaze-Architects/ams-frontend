@@ -83,6 +83,18 @@ export default function Login() {
         }
         console.log("[Login] role:", normalizedRole)
 
+        // Update exported ids based on role
+        if (normalizedRole === "ADMIN") {
+          admin_id = user.id || null
+          alumni_id = null
+        } else if (normalizedRole === "ALUMNI") {
+          alumni_id = user.id || null
+          admin_id = null
+        } else {
+          admin_id = null
+          alumni_id = null
+        }
+
         if (normalizedRole === "ALUMNI") {
           navigate("/community")
         } else if (normalizedRole === "ADMIN") {
