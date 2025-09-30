@@ -19,8 +19,8 @@ export default function ManageEvents() {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <Card className="w-[600px]">
+  <div className="flex justify-center items-start min-h-screen bg-gray-100 pt-24 px-4 pb-8">
+      <Card className="w-[1000px]">
         <CardHeader>
           <CardTitle>Manage Events</CardTitle>
         </CardHeader>
@@ -28,15 +28,23 @@ export default function ManageEvents() {
           {events.length === 0 ? (
             <p>No events found.</p>
           ) : (
-            <ul className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {events.map(event => (
-                <li key={event.event_id} className="border rounded p-3">
-                  <div className="font-bold">{event.event_name}</div>
-                  <div>Description: {event.event_description}</div>
-                  <div>Date & Time: {event.event_date_time ? new Date(event.event_date_time).toLocaleString() : "N/A"}</div>
-                </li>
+                <div key={event.event_id} className="border rounded bg-white shadow flex flex-col">
+                  <img
+                    src={`/${event.event_poster_key || "poster.jpg"}`}
+                    alt="Event Poster"
+                    className="w-full object-cover rounded-t"
+                    style={{ height: '120px', maxHeight: '33%', minHeight: '120px' }}
+                  />
+                  <div className="p-4 flex-1 flex flex-col">
+                    <div className="font-bold text-lg mb-2">{event.event_name}</div>
+                    <div className="mb-1 text-gray-700">{event.event_description}</div>
+                    <div className="text-sm text-gray-500">{event.event_date_time ? new Date(event.event_date_time).toLocaleString() : "N/A"}</div>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </CardContent>
       </Card>
