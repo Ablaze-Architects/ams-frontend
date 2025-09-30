@@ -13,7 +13,7 @@ import AlumniDirectory from "./pages/AlumniDirectory";
 
 function App() {
   return (
-    <Router basename="/ams-frontend">
+    <Router basename="">
       <AppContent />
       <Routes>
         {/* Redirect root / to /login */}
@@ -21,7 +21,14 @@ function App() {
 
         <Route path="/dashboard" element={
            <Dashboard />
-        } />
+        }>
+            <Route index element={<div />} />
+            <Route path="alumni-records" element={<AlumniDirectory />} />
+            <Route path="events" element={<div>Manage Events</div>} />
+            <Route path="events/add" element={<div>Add Event</div>} />
+            <Route path="events/invitations" element={<InvitationPage />} />
+            
+        </Route>
 
         <Route path="/community" element={
            <Community />
@@ -46,7 +53,7 @@ function App() {
 
 function AppContent() {
   const location = useLocation();
-  const hidenavbar = location.pathname === "/dashboard";
+  const hidenavbar = location.pathname.startsWith("/dashboard");
   return (
     <>
       {!hidenavbar && <Navbar />}
