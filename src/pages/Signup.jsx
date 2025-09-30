@@ -45,7 +45,7 @@ export default function Signup() {
           avatar: data.avatar || "/avatars/default.jpg",
         });
         alert("Signup successful! Please login.");
-        navigate("/login");
+  navigate("/login");
       } else {
         alert(data.message || "Signup failed");
       }
@@ -87,7 +87,7 @@ export default function Signup() {
           avatar: data.avatar || "/avatars/default.jpg",
         });
         alert("Signup successful! Please login.");
-        navigate("/login");
+  navigate("/login");
       } else {
         alert(data.message || "Signup failed");
       }

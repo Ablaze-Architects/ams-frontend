@@ -9,15 +9,17 @@ import { Dashboard } from "@/pages/Dashboard";
 import Community from "./pages/Community";
 import InvitationPage from "./components/events/Invitation";
 import AlumniDirectory from "./pages/AlumniDirectory";
-
+import AddEvent from "./pages/AddEvent";
+import ManageEvents from "./pages/ManageEvents";
 
 function App() {
   return (
-    <Router basename="">
+    <Router>
       <AppContent />
       <Routes>
         {/* Redirect root / to /login */}
         <Route path="/" element={<Navigate to="/login" replace />} />
+
 
         <Route path="/dashboard" element={
            <Dashboard />
@@ -42,10 +44,11 @@ function App() {
           <AlumniDirectory />
         } />
         
-
         <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/admin/events/add" element={<AddEvent />} />
+        <Route path="/admin/events/manage" element={<ManageEvents />} />
       </Routes>
     </Router>
   );

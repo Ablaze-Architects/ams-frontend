@@ -21,7 +21,7 @@ export default function ProtectedRoute({ children, role }) {
       return children;
     } else {
       // Unauthorized access
-      return <Navigate to="/unauthorized" replace />;
+  return <Navigate to="/unauthorized" replace />;
     }
   }
 
